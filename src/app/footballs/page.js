@@ -59,9 +59,9 @@ export default async function FootballsPage() {
                   <span className="text-blue-600 font-bold text-xl">
                     ৳{football.price}
                   </span>
-                  <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-                    Add to Cart
-                  </button>
+                  <Link href={`/footballs/${football._id}`} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+                    Details
+                  </Link>
                 </div>
               </div>
             </div>

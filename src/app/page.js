@@ -1,3 +1,4 @@
+import Link from "next/link";
 import HeroBanner from "./components/HeroBanner";
 
 async function getFootballs() {
@@ -54,9 +55,9 @@ export default async function Home() {
                   <p className="text-gray-600 text-sm">{football.description}</p>
                   <div className="mt-2 flex justify-between items-center">
                     <span className="text-blue-600 font-bold">৳{football.price}</span>
-                    <button className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">
-                      Add
-                    </button>
+                    <Link href={`/footballs/${football._id}`} className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">
+                      Details
+                    </Link>
                   </div>
                 </div>
               </div>
