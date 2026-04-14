@@ -1,0 +1,32 @@
+import { NextResponse } from "next/server";
+import jwt from "jsonwebtoken";
+import { getUserById } from "@/lib/user";
+
+export async function GET(request) {
+  try {
+    const token = request.cookies.get("token")?.value;
+
+    if (!token) {
+      return NextResponse.json({ user: null }, { status: 200 });
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await getUserById(decoded.id);
+
+    if (!user) {
+      return NextResponse.json({ user: null }, { status: 200 });
+    }
+
+    return NextResponse.json({
+      user: {
+        id: user._id.toString(),
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        avatar: user.avatar,
+      },
+    });
+  } catch (error) {
+    return NextResponse.json({ user: null }, { status: 200 });
+  }
+}

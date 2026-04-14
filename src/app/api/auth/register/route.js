@@ -1,0 +1,46 @@
+import { NextResponse } from "next/server";
+import bcrypt from "bcryptjs";
+import { createUser, getUserByEmail } from "@/lib/user";
+
+export async function POST(request) {
+  try {
+    const body = await request.json();
+    const { name, email, password } = body;
+
+    if (!name || !email || !password) {
+      return NextResponse.json(
+        { error: "All fields are required" },
+        { status: 400 }
+      );
+    }
+
+    const existingUser = await getUserByEmail(email);
+    if (existingUser) {
+      return NextResponse.json(
+        { error: "User already exists" },
+        { status: 400 }
+      );
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const userId = await createUser({
+      name,
+      email,
+      password: hashedPassword,
+      avatar: "",
+      role: "user",
+    });
+
+    return NextResponse.json(
+      { message: "User created successfully", userId: userId.toString() },
+      { status: 201 }
+    );
+  } catch (error) {
+    console.error("Registration error:", error);
+    return NextResponse.json(
+      { error: "Failed to register user" },
+      { status: 500 }
+    );
+  }
+}
