@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+export const dynamic = 'force-dynamic';
+
 async function getFootballs() {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/footballs`, {

@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 
-export default function LoginPage() {
+function LoginForm() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
@@ -144,3 +144,13 @@ export default function LoginPage() {
     </div>
   );
 }
+
+function LoginPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+      <LoginForm />
+    </Suspense>
+  );
+}
+
+export default LoginPage;
