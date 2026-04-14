@@ -31,14 +31,14 @@ export default function HeroBanner() {
           <div className="mt-6 flex justify-center gap-4 flex-wrap">
             
             <Link
-              href="/products"
+              href="/footballs"
               className="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg font-semibold transition"
             >
               Shop Now
             </Link>
 
             <Link
-              href="/products"
+              href="/footballs"
               className="border border-white px-6 py-3 rounded-lg hover:bg-white hover:text-black transition"
             >
               Explore

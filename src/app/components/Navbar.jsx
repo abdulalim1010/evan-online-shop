@@ -19,6 +19,7 @@ export default function Navbar() {
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-6">
             <Link href="/" className="hover:text-blue-500">Home</Link>
+            <Link href="/footballs" className="hover:text-blue-500">Footballs</Link>
             <Link href="/products" className="hover:text-blue-500">Products</Link>
             <Link href="/about" className="hover:text-blue-500">About</Link>
             <Link href="/contact" className="hover:text-blue-500">Contact</Link>
@@ -47,6 +48,9 @@ export default function Navbar() {
         <div className="md:hidden bg-white shadow-md px-4 pb-4 space-y-3">
           <Link href="/" onClick={() => setOpen(false)} className="block">
             Home
+          </Link>
+          <Link href="/footballs" onClick={() => setOpen(false)} className="block">
+            Footballs
           </Link>
           <Link href="/products" onClick={() => setOpen(false)} className="block">
             Products
