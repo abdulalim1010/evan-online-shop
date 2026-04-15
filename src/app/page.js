@@ -1,16 +1,14 @@
 import Link from "next/link";
 import HeroBanner from "./components/HeroBanner";
+import { getCollection } from "@/lib/mongodb";
 
 export const dynamic = 'force-dynamic';
 
 async function getFootballs() {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/footballs`, {
-      cache: 'no-store'
-    });
-    if (!res.ok) return [];
-    const data = await res.json();
-    return data.slice(0, 4);
+    const collection = await getCollection("footballs");
+    const footballs = await collection.find({}).limit(4).toArray();
+    return footballs;
   } catch (error) {
     console.error("Error fetching footballs:", error);
     return [];
@@ -19,12 +17,9 @@ async function getFootballs() {
 
 async function getCricketBats() {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/cricket-bats`, {
-      cache: 'no-store'
-    });
-    if (!res.ok) return [];
-    const data = await res.json();
-    return data.slice(0, 4);
+    const collection = await getCollection("cricket-bats");
+    const cricketBats = await collection.find({}).limit(4).toArray();
+    return cricketBats;
   } catch (error) {
     console.error("Error fetching cricket bats:", error);
     return [];

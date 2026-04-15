@@ -128,7 +128,7 @@ function LoginForm() {
             </div>
           </div>
 
-          <button className="w-full py-4 border-2 border-gray-200 rounded-xl hover:bg-gray-50 hover:border-gray-300 transition-all flex items-center justify-center gap-3">
+          <button className="w-full py-4 border-2 border-gray-200 rounded-xl hover:bg-gray-50 hover:border-gray-300 transition-all flex items-center justify-center gap-3" disabled title="Coming soon">
             <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="w-5 h-5" />
             <span className="font-medium text-gray-700">Google</span>
           </button>

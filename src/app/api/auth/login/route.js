@@ -3,6 +3,8 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { getUserByEmail } from "@/lib/user";
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(request) {
   try {
     const body = await request.json();
@@ -42,6 +44,8 @@ export async function POST(request) {
       { status: 200 }
     );
 
+    console.log("Login - setting cookie, token:", token ? "present" : "missing");
+    
     response.cookies.set("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",

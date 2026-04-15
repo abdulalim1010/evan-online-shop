@@ -1,14 +1,13 @@
 import Link from "next/link";
+import { getCollection } from "@/lib/mongodb";
 
 export const dynamic = 'force-dynamic';
 
 async function getCricketBats() {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/cricket-bats`, {
-      cache: 'no-store'
-    });
-    if (!res.ok) throw new Error('Failed to fetch');
-    return await res.json();
+    const collection = await getCollection("cricket-bats");
+    const cricketBats = await collection.find({}).toArray();
+    return cricketBats;
   } catch (error) {
     console.error("Error fetching cricket bats:", error);
     return [];

@@ -14,11 +14,14 @@ export function AuthProvider({ children }) {
 
   const checkSession = async () => {
     try {
-      const res = await fetch("/api/auth/session");
+      console.log("AuthContext: Checking session...");
+      const res = await fetch("/api/auth/session", { credentials: "include" });
+      console.log("AuthContext: Session response status:", res.status);
       const data = await res.json();
+      console.log("AuthContext: Session data:", data);
       setUser(data.user);
     } catch (error) {
-      console.error("Session check failed:", error);
+      console.error("AuthContext: Session check failed:", error);
     } finally {
       setLoading(false);
     }
@@ -29,10 +32,15 @@ export function AuthProvider({ children }) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
+      credentials: "include",
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error);
-    await checkSession();
+    if (data.user) {
+      setUser(data.user);
+    } else {
+      await checkSession();
+    }
     return data;
   };
 
@@ -48,7 +56,7 @@ export function AuthProvider({ children }) {
   };
 
   const logout = async () => {
-    await fetch("/api/auth/logout", { method: "POST" });
+    await fetch("/api/auth/logout", { method: "POST", credentials: "include" });
     setUser(null);
   };
 

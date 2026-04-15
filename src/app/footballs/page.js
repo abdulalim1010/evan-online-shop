@@ -1,14 +1,13 @@
 import Link from "next/link";
+import { getCollection } from "@/lib/mongodb";
 
 export const dynamic = 'force-dynamic';
 
 async function getFootballs() {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/footballs`, {
-      cache: 'no-store'
-    });
-    if (!res.ok) throw new Error('Failed to fetch');
-    return await res.json();
+    const collection = await getCollection("footballs");
+    const footballs = await collection.find({}).toArray();
+    return footballs;
   } catch (error) {
     console.error("Error fetching footballs:", error);
     return [];
