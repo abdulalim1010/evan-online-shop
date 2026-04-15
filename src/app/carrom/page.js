@@ -1,15 +1,24 @@
+import CategoryShowcase from "../components/CategoryShowcase";
+
 export const metadata = {
   title: "Carrom - Evan Sports",
-  description: "Shop carrom boards at Evan Sports",
+  description: "Premium carrom boards, coins, and accessories.",
 };
 
 export default function CarromPage() {
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold mb-8">Carrom Boards</h1>
-      <div className="text-center py-12">
-        <p className="text-gray-500 text-lg">Coming soon...</p>
-      </div>
-    </div>
+    <CategoryShowcase
+      title="Professional Carrom Collection"
+      subtitle="Tournament-grade boards, smooth striker control, and durable accessories for home and club use."
+      icon="🎯"
+      points={[
+        "Premium boards with polished playing surface",
+        "Match-ready strikers and coin sets",
+        "Protective covers and maintenance kits",
+        "Perfect choices for beginner to pro players",
+      ]}
+      ctaHref="/contact"
+      ctaText="Request Carrom Catalog"
+    />
   );
 }

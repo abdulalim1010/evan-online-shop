@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FaSearch, FaShoppingCart, FaUser, FaSignOutAlt } from "react-icons/fa";
 import { useAuth } from "@/context/AuthContext";
+import Swal from "sweetalert2";
 
 const products = [
   { name: "Footballs", href: "/footballs" },
@@ -46,37 +47,53 @@ export default function Navbar() {
   };
 
   const handleLogout = async () => {
-    await logout();
-    router.push("/");
+    const result = await Swal.fire({
+      title: "Sign out?",
+      text: "You can sign in again anytime.",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Yes, sign out",
+    });
+
+    if (result.isConfirmed) {
+      await logout();
+      await Swal.fire({
+        icon: "success",
+        title: "Signed out",
+        timer: 1200,
+        showConfirmButton: false,
+      });
+      router.push("/");
+    }
   };
 
   return (
-    <nav className="bg-gradient-to-r from-blue-700 via-blue-600 to-blue-500 shadow-lg sticky top-0 z-50 backdrop-blur-md bg-opacity-90">
+    <nav className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="flex items-center justify-between h-16 gap-4">
+        <div className="flex h-16 items-center justify-between gap-4">
           
-          <Link href="/" className="text-xl font-bold text-white flex items-center gap-2 shrink-0 hover:scale-105 transition-transform">
-            🏀 Evan Sports
+          <Link href="/" className="shrink-0 text-xl font-bold text-slate-900 transition-transform hover:scale-105">
+            Evan Sports
           </Link>
 
-          <form onSubmit={handleSearch} className="hidden md:flex items-center bg-white/20 backdrop-blur-sm rounded-full px-3 py-1.5 w-[220px] border border-white/30">
-            <FaSearch className="text-white mr-2" />
+          <form onSubmit={handleSearch} className="hidden w-[260px] items-center rounded-full border border-slate-300 bg-white px-3 py-1.5 md:flex">
+            <FaSearch className="mr-2 text-slate-500" />
             <input
               type="text"
               placeholder="Search products..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="outline-none text-sm w-full bg-transparent text-white placeholder-white/70"
+              className="w-full bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400"
             />
           </form>
 
-          <div className="hidden md:flex items-center gap-8">
-            <Link href="/" className="text-white hover:text-yellow-300 transition-colors">Home</Link>
+          <div className="hidden items-center gap-8 md:flex">
+            <Link href="/" className="text-slate-700 transition-colors hover:text-blue-600">Home</Link>
 
             <div className="relative" ref={productsRef}>
               <button 
                 onClick={() => setProductsOpen(!productsOpen)}
-                className="text-white hover:text-yellow-300 transition-colors flex items-center gap-1"
+                className="flex items-center gap-1 text-slate-700 transition-colors hover:text-blue-600"
               >
                 Products 
                 <svg className={`w-3 h-3 transition-transform ${productsOpen ? 'rotate-180' : ''}`} fill="currentColor" viewBox="0 0 20 20">
@@ -84,12 +101,12 @@ export default function Navbar() {
                 </svg>
               </button>
 
-              <div className={`absolute top-full left-0 bg-white/90 backdrop-blur-md shadow-xl rounded-lg py-2 min-w-[160px] transition-all duration-200 ${productsOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}>
+              <div className={`absolute left-0 top-full min-w-[160px] rounded-lg border border-slate-200 bg-white py-2 shadow-xl transition-all duration-200 ${productsOpen ? "visible translate-y-0 opacity-100" : "invisible -translate-y-2 opacity-0"}`}>
                 {products.map((item) => (
                   <Link 
                     key={item.name}
                     href={item.href}
-                    className="block px-4 py-2 text-gray-700 hover:bg-blue-500 hover:text-white transition-colors"
+                    className="block px-4 py-2 text-gray-700 transition-colors hover:bg-blue-50 hover:text-blue-700"
                     onClick={() => setProductsOpen(false)}
                   >
                     {item.name}
@@ -98,14 +115,14 @@ export default function Navbar() {
               </div>
             </div>
 
-            <Link href="/about" className="text-white hover:text-yellow-300 transition-colors">About</Link>
-            <Link href="/contact" className="text-white hover:text-yellow-300 transition-colors">Contact</Link>
+            <Link href="/about" className="text-slate-700 transition-colors hover:text-blue-600">About</Link>
+            <Link href="/contact" className="text-slate-700 transition-colors hover:text-blue-600">Contact</Link>
           </div>
 
-          <div className="hidden md:flex items-center gap-4 shrink-0">
-            <Link href="/cart" className="relative text-white text-lg hover:text-yellow-300 transition-colors">
+          <div className="hidden shrink-0 items-center gap-4 md:flex">
+            <Link href="/cart" className="relative text-lg text-slate-700 transition-colors hover:text-blue-600">
               <FaShoppingCart />
-              <span className="absolute -top-2 -right-3 bg-red-500 text-white text-xs px-1.5 rounded-full">
+              <span className="absolute -right-3 -top-2 rounded-full bg-red-500 px-1.5 text-xs text-white">
                 2
               </span>
             </Link>
@@ -115,15 +132,15 @@ export default function Navbar() {
                 <div className="relative" ref={userMenuRef}>
                   <button 
                     onClick={() => setUserMenuOpen(!userMenuOpen)}
-                    className="flex items-center gap-2 text-white hover:text-yellow-300 transition-colors"
+                    className="flex items-center gap-2 text-slate-700 transition-colors hover:text-blue-600"
                   >
-                    <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-50">
                       <FaUser className="text-sm" />
                     </div>
                     <span className="text-sm">{user.name}</span>
                   </button>
 
-                  <div className={`absolute top-full right-0 bg-white/90 backdrop-blur-md shadow-xl rounded-lg py-2 min-w-[150px] transition-all duration-200 ${userMenuOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}>
+                  <div className={`absolute right-0 top-full min-w-[150px] rounded-lg border border-slate-200 bg-white py-2 shadow-xl transition-all duration-200 ${userMenuOpen ? "visible translate-y-0 opacity-100" : "invisible -translate-y-2 opacity-0"}`}>
                     <Link href="/profile" className="block px-4 py-2 text-gray-700 hover:bg-blue-50" onClick={() => setUserMenuOpen(false)}>
                       Profile
                     </Link>
@@ -141,7 +158,7 @@ export default function Navbar() {
                 </div>
               ) : (
                 <Link href="/login">
-                  <button className="bg-white text-blue-600 px-4 py-1.5 rounded-full text-sm font-semibold hover:bg-yellow-300 hover:text-blue-700 transition-colors">
+                  <button className="rounded-full bg-blue-600 px-4 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-blue-700">
                     Sign In
                   </button>
                 </Link>
@@ -150,7 +167,7 @@ export default function Navbar() {
           </div>
 
           <button
-            className="md:hidden text-2xl text-white"
+            className="text-2xl text-slate-700 md:hidden"
             onClick={() => setOpen(!open)}
           >
             {open ? "✕" : "☰"}
@@ -158,36 +175,36 @@ export default function Navbar() {
         </div>
       </div>
 
-      <div className={`md:hidden bg-blue-600/95 backdrop-blur-md px-4 pb-4 transition-all duration-300 ${open ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
+      <div className={`bg-white px-4 pb-4 shadow-inner transition-all duration-300 md:hidden ${open ? "max-h-96 opacity-100" : "max-h-0 overflow-hidden opacity-0"}`}>
         <form onSubmit={handleSearch} className="mb-3">
           <input
             type="text"
             placeholder="Search..."
-            className="w-full px-4 py-2 rounded-full text-sm outline-none bg-white/20 text-white placeholder-white/70 border border-white/30"
+            className="w-full rounded-full border border-slate-300 px-4 py-2 text-sm text-slate-700 outline-none placeholder:text-slate-400"
           />
         </form>
         <div className="space-y-2">
-          <Link href="/" className="block text-white">Home</Link>
+          <Link href="/" className="block text-slate-700">Home</Link>
           <div>
-            <button onClick={() => setProductsOpen(!productsOpen)} className="block w-full text-left text-white">
+            <button onClick={() => setProductsOpen(!productsOpen)} className="block w-full text-left text-slate-700">
               Products ▼
             </button>
-            <div className={`ml-4 mt-2 space-y-2 transition-all ${productsOpen ? 'max-h-48' : 'max-h-0 overflow-hidden'}`}>
+            <div className={`ml-4 mt-2 space-y-2 transition-all ${productsOpen ? "max-h-48" : "max-h-0 overflow-hidden"}`}>
               {products.map((item) => (
-                <Link key={item.name} href={item.href} onClick={() => setOpen(false)} className="block text-blue-200">
+                <Link key={item.name} href={item.href} onClick={() => setOpen(false)} className="block text-blue-600">
                   {item.name}
                 </Link>
               ))}
             </div>
           </div>
-          <Link href="/about" className="block text-white">About</Link>
-          <Link href="/contact" className="block text-white">Contact</Link>
-          <Link href="/cart" className="block text-white">Cart</Link>
+          <Link href="/about" className="block text-slate-700">About</Link>
+          <Link href="/contact" className="block text-slate-700">Contact</Link>
+          <Link href="/cart" className="block text-slate-700">Cart</Link>
           {!loading && (
             user ? (
-              <button onClick={handleLogout} className="block text-white">Logout</button>
+              <button onClick={handleLogout} className="block text-slate-700">Logout</button>
             ) : (
-              <Link href="/login" className="block text-white">Sign In</Link>
+              <Link href="/login" className="block text-slate-700">Sign In</Link>
             )
           )}
         </div>

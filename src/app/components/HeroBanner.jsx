@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function HeroBanner() {
   return (
-    <section className="relative h-[90vh] w-full">
+    <section className="relative h-[78vh] min-h-[520px] w-full overflow-hidden">
       
       {/* Background Image */}
       <img
@@ -12,36 +12,36 @@ export default function HeroBanner() {
       />
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black/40"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/45 to-black/50"></div>
 
       {/* Content */}
-      <div className="relative z-10 flex items-center justify-center h-full text-center px-4">
-        <div className="max-w-2xl text-white">
+      <div className="relative z-10 flex h-full items-center justify-center px-4 text-center">
+        <div className="max-w-3xl text-white fade-up">
           
           <h1 className="text-3xl md:text-5xl font-bold leading-tight">
             Upgrade Your Game With
             <span className="text-blue-400"> Premium Sports Gear</span>
           </h1>
 
-          <p className="mt-4 text-lg text-gray-200">
-            ক্রিকেট ব্যাট, ফুটবল বুট, গ্লাভস থেকে শুরু করে সব ধরনের
-            স্পোর্টস প্রোডাক্ট এখন এক জায়গায়।
+          <p className="mt-5 text-lg text-slate-200">
+            Build your performance with high-quality football, cricket, volleyball,
+            chess, carrom, and handball essentials from one trusted store.
           </p>
 
-          <div className="mt-6 flex justify-center gap-4 flex-wrap">
+          <div className="mt-8 flex flex-wrap justify-center gap-4">
             
             <Link
               href="/footballs"
-              className="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg font-semibold transition"
+              className="rounded-lg bg-blue-600 px-6 py-3 font-semibold transition hover:bg-blue-700"
             >
               Shop Now
             </Link>
 
             <Link
-              href="/footballs"
-              className="border border-white px-6 py-3 rounded-lg hover:bg-white hover:text-black transition"
+              href="/cricket-bats"
+              className="rounded-lg border border-white px-6 py-3 transition hover:bg-white hover:text-black"
             >
-              Explore
+              Explore Categories
             </Link>
 
           </div>

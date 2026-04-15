@@ -29,15 +29,21 @@ async function getCricketBats() {
 export default async function Home() {
   const footballs = await getFootballs();
   const cricketBats = await getCricketBats();
+  const otherSports = [
+    { title: "Carrom", href: "/carrom", description: "Premium boards, coins, and striker sets." },
+    { title: "Volleyball", href: "/volleyball", description: "Indoor and outdoor match-ready volleyball gear." },
+    { title: "Chess", href: "/chess", description: "Elegant chess sets and tournament clocks." },
+    { title: "Handball", href: "/handball", description: "Balls, shoes, and training essentials." },
+  ];
 
   return (
     <div>
-      <HeroBanner/>
+      <HeroBanner />
 
-      <section className="max-w-7xl mx-auto px-4 py-12">
+      <section className="page-shell fade-up">
         <div className="flex justify-between items-center mb-8">
-          <h2 className="text-2xl font-bold">Featured Footballs</h2>
-          <a href="/footballs" className="text-blue-600 hover:underline">View All →</a>
+          <h2 className="section-title">Featured Footballs</h2>
+          <a href="/footballs" className="text-blue-600 hover:underline">View All -></a>
         </div>
         
         {footballs.length === 0 ? (
@@ -47,7 +53,7 @@ export default async function Home() {
             {footballs.map((football) => (
               <div
                 key={football._id}
-                className="border rounded-lg overflow-hidden shadow-md hover:shadow-lg transition"
+                className="glass-card overflow-hidden transition hover:-translate-y-1 hover:shadow-xl"
               >
                 <div className="aspect-square bg-gray-100">
                   {football.image ? (
@@ -64,7 +70,7 @@ export default async function Home() {
                 </div>
                 <div className="p-4">
                   <h3 className="font-semibold">{football.name}</h3>
-                  <p className="text-gray-600 text-sm">{football.description}</p>
+                  <p className="soft-text text-sm">{football.description}</p>
                   <div className="mt-2 flex justify-between items-center">
                     <span className="text-blue-600 font-bold">৳{football.price}</span>
                     <Link href={`/footballs/${football._id}`} className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">
@@ -78,10 +84,10 @@ export default async function Home() {
         )}
       </section>
 
-      <section className="max-w-7xl mx-auto px-4 py-12">
+      <section className="page-shell fade-up-delay">
         <div className="flex justify-between items-center mb-8">
-          <h2 className="text-2xl font-bold">Featured Cricket Bats</h2>
-          <a href="/cricket-bats" className="text-blue-600 hover:underline">View All →</a>
+          <h2 className="section-title">Featured Cricket Bats</h2>
+          <a href="/cricket-bats" className="text-blue-600 hover:underline">View All -></a>
         </div>
         
         {cricketBats.length === 0 ? (
@@ -91,7 +97,7 @@ export default async function Home() {
             {cricketBats.map((bat) => (
               <div
                 key={bat._id}
-                className="border rounded-lg overflow-hidden shadow-md hover:shadow-lg transition"
+                className="glass-card overflow-hidden transition hover:-translate-y-1 hover:shadow-xl"
               >
                 <div className="aspect-square bg-gray-100">
                   {bat.image ? (
@@ -108,7 +114,7 @@ export default async function Home() {
                 </div>
                 <div className="p-4">
                   <h3 className="font-semibold">{bat.name}</h3>
-                  <p className="text-gray-600 text-sm">{bat.description}</p>
+                  <p className="soft-text text-sm">{bat.description}</p>
                   <div className="mt-2 flex justify-between items-center">
                     <span className="text-blue-600 font-bold">৳{bat.price}</span>
                     <Link href={`/cricket-bats/${bat._id}`} className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">
@@ -120,6 +126,26 @@ export default async function Home() {
             ))}
           </div>
         )}
+      </section>
+
+      <section className="page-shell pt-0">
+        <div className="mb-8">
+          <h2 className="section-title">Explore Other Sports</h2>
+          <p className="soft-text mt-2">Find equipment by your favorite game category.</p>
+        </div>
+        <div className="grid gap-5 md:grid-cols-2">
+          {otherSports.map((sport) => (
+            <Link
+              href={sport.href}
+              key={sport.href}
+              className="glass-card block p-6 transition hover:-translate-y-1 hover:shadow-xl"
+            >
+              <h3 className="text-xl font-semibold text-slate-800">{sport.title}</h3>
+              <p className="soft-text mt-2">{sport.description}</p>
+              <span className="mt-4 inline-block text-sm font-semibold text-blue-600">Browse {sport.title}</span>
+            </Link>
+          ))}
+        </div>
       </section>
     </div>
   );

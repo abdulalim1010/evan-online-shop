@@ -1,15 +1,24 @@
+import CategoryShowcase from "../components/CategoryShowcase";
+
 export const metadata = {
   title: "Chess - Evan Sports",
-  description: "Shop chess sets at Evan Sports",
+  description: "Shop professional chess sets and learning boards.",
 };
 
 export default function ChessPage() {
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold mb-8">Chess Sets</h1>
-      <div className="text-center py-12">
-        <p className="text-gray-500 text-lg">Coming soon...</p>
-      </div>
-    </div>
+    <CategoryShowcase
+      title="Chess Collection"
+      subtitle="Elegant chess boards, weighted pieces, and tournament accessories designed for strategy lovers."
+      icon="♟️"
+      points={[
+        "Wooden and magnetic chess board options",
+        "Weighted pieces for stable gameplay",
+        "Beginner learning sets for schools",
+        "Premium tournament edition boards",
+      ]}
+      ctaHref="/contact"
+      ctaText="View Chess Selection"
+    />
   );
 }

@@ -5,11 +5,14 @@ export const metadata = {
 
 export default function OrdersPage() {
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold mb-8">My Orders</h1>
-      <div className="text-center py-12">
-        <p className="text-gray-500 text-lg">No orders yet.</p>
+    <section className="page-shell fade-up">
+      <div className="glass-card p-8">
+        <h1 className="text-3xl font-bold mb-3">My Orders</h1>
+        <p className="text-slate-600">Track your purchased items, delivery status, and invoices.</p>
+        <div className="mt-8 text-center py-12 rounded-xl border border-dashed border-slate-300 bg-white">
+          <p className="text-slate-500 text-lg">No orders yet.</p>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }

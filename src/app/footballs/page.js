@@ -23,12 +23,15 @@ export default async function FootballsPage() {
   const footballs = await getFootballs();
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">Our Footballs</h1>
+    <div className="page-shell fade-up">
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold md:text-4xl">Our Football Collection</h1>
+        <p className="mt-2 text-slate-600">Match-quality footballs for training, tournaments, and clubs.</p>
+      </div>
       
       {footballs.length === 0 ? (
-        <div className="text-center py-12">
-          <p className="text-gray-500 text-lg">No footballs available yet.</p>
+        <div className="glass-card text-center py-12">
+          <p className="text-slate-500 text-lg">No footballs available yet.</p>
           <Link href="/" className="text-blue-600 hover:underline mt-4 inline-block">
             Go back home
           </Link>
@@ -38,7 +41,7 @@ export default async function FootballsPage() {
           {footballs.map((football) => (
             <div
               key={football._id}
-              className="border rounded-lg overflow-hidden shadow-md hover:shadow-lg transition"
+              className="glass-card overflow-hidden transition hover:-translate-y-1 hover:shadow-xl"
             >
               <div className="aspect-square bg-gray-100 relative">
                 {football.image ? (
@@ -55,12 +58,12 @@ export default async function FootballsPage() {
               </div>
               <div className="p-4">
                 <h2 className="font-semibold text-lg">{football.name}</h2>
-                <p className="text-gray-600 text-sm mt-1">{football.description}</p>
+                <p className="text-slate-600 text-sm mt-1">{football.description}</p>
                 <div className="mt-3 flex justify-between items-center">
                   <span className="text-blue-600 font-bold text-xl">
                     ৳{football.price}
                   </span>
-                  <Link href={`/footballs/${football._id}`} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+                  <Link href={`/footballs/${football._id}`} className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 transition">
                     Details
                   </Link>
                 </div>

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getCollection } from "@/lib/mongodb";
+import AddToCartButton from "@/app/components/AddToCartButton";
 
 async function getFootball(id) {
   try {
@@ -38,13 +39,13 @@ export default async function FootballDetailsPage({ params }) {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
-      <Link href="/" className="text-blue-600 hover:underline mb-4 inline-block">
+    <div className="page-shell fade-up">
+      <Link href="/footballs" className="text-blue-600 hover:underline mb-4 inline-block">
         ← Back to Home
       </Link>
       
-      <div className="grid md:grid-cols-2 gap-8">
-        <div className="aspect-square bg-gray-100 rounded-lg overflow-hidden">
+      <div className="glass-card grid gap-8 p-6 md:grid-cols-2">
+        <div className="aspect-square bg-gray-100 rounded-xl overflow-hidden">
           {football.image ? (
             <img
               src={football.image}
@@ -60,7 +61,7 @@ export default async function FootballDetailsPage({ params }) {
         
         <div className="space-y-4">
           <h1 className="text-3xl font-bold">{football.name}</h1>
-          <p className="text-gray-600">{football.description}</p>
+          <p className="text-slate-600">{football.description}</p>
           
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div><span className="font-semibold">Brand:</span> {football.brand}</div>
@@ -70,9 +71,7 @@ export default async function FootballDetailsPage({ params }) {
           
           <div className="text-3xl font-bold text-blue-600">৳{football.price}</div>
           
-          <button className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition w-full md:w-auto">
-            Add to Cart
-          </button>
+          <AddToCartButton productName={football.name} />
         </div>
       </div>
     </div>

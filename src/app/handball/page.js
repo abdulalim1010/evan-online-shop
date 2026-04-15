@@ -1,15 +1,24 @@
+import CategoryShowcase from "../components/CategoryShowcase";
+
 export const metadata = {
   title: "Handball - Evan Sports",
-  description: "Shop handball equipment at Evan Sports",
+  description: "Premium handball collection for training and leagues.",
 };
 
 export default function HandballPage() {
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold mb-8">Handball Equipment</h1>
-      <div className="text-center py-12">
-        <p className="text-gray-500 text-lg">Coming soon...</p>
-      </div>
-    </div>
+    <CategoryShowcase
+      title="Handball Equipment"
+      subtitle="Performance-focused handball collection with strong grip, balanced weight, and all-court reliability."
+      icon="🤾"
+      points={[
+        "Official size balls for teams and academies",
+        "Training cones and tactical accessories",
+        "Durable products for indoor practice",
+        "Fast fulfillment for clubs and schools",
+      ]}
+      ctaHref="/contact"
+      ctaText="Request Handball Inventory"
+    />
   );
 }

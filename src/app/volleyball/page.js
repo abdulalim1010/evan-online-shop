@@ -1,15 +1,24 @@
+import CategoryShowcase from "../components/CategoryShowcase";
+
 export const metadata = {
   title: "Volleyball - Evan Sports",
-  description: "Shop volleyballs at Evan Sports",
+  description: "Shop training and competition volleyball gear.",
 };
 
 export default function VolleyballPage() {
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold mb-8">Volleyballs</h1>
-      <div className="text-center py-12">
-        <p className="text-gray-500 text-lg">Coming soon...</p>
-      </div>
-    </div>
+    <CategoryShowcase
+      title="Volleyball Essentials"
+      subtitle="From indoor pro match balls to outdoor practice collections, choose quality built for control and durability."
+      icon="🏐"
+      points={[
+        "Indoor and beach volleyball options",
+        "Knee pads and grip-enhancing accessories",
+        "Club-friendly bulk order support",
+        "Products selected for long-term performance",
+      ]}
+      ctaHref="/contact"
+      ctaText="Get Volleyball Deals"
+    />
   );
 }
