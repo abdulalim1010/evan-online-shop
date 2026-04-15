@@ -17,8 +17,23 @@ async function getFootballs() {
   }
 }
 
+async function getCricketBats() {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/cricket-bats`, {
+      cache: 'no-store'
+    });
+    if (!res.ok) return [];
+    const data = await res.json();
+    return data.slice(0, 4);
+  } catch (error) {
+    console.error("Error fetching cricket bats:", error);
+    return [];
+  }
+}
+
 export default async function Home() {
   const footballs = await getFootballs();
+  const cricketBats = await getCricketBats();
 
   return (
     <div>
@@ -58,6 +73,50 @@ export default async function Home() {
                   <div className="mt-2 flex justify-between items-center">
                     <span className="text-blue-600 font-bold">৳{football.price}</span>
                     <Link href={`/footballs/${football._id}`} className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">
+                      Details
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+
+      <section className="max-w-7xl mx-auto px-4 py-12">
+        <div className="flex justify-between items-center mb-8">
+          <h2 className="text-2xl font-bold">Featured Cricket Bats</h2>
+          <a href="/cricket-bats" className="text-blue-600 hover:underline">View All →</a>
+        </div>
+        
+        {cricketBats.length === 0 ? (
+          <p className="text-center text-gray-500 py-8">No cricket bats available yet.</p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {cricketBats.map((bat) => (
+              <div
+                key={bat._id}
+                className="border rounded-lg overflow-hidden shadow-md hover:shadow-lg transition"
+              >
+                <div className="aspect-square bg-gray-100">
+                  {bat.image ? (
+                    <img
+                      src={bat.image}
+                      alt={bat.name}
+                      className="object-cover w-full h-full"
+                    />
+                  ) : (
+                    <div className="flex items-center justify-center h-full text-gray-400">
+                      🏏
+                    </div>
+                  )}
+                </div>
+                <div className="p-4">
+                  <h3 className="font-semibold">{bat.name}</h3>
+                  <p className="text-gray-600 text-sm">{bat.description}</p>
+                  <div className="mt-2 flex justify-between items-center">
+                    <span className="text-blue-600 font-bold">৳{bat.price}</span>
+                    <Link href={`/cricket-bats/${bat._id}`} className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">
                       Details
                     </Link>
                   </div>

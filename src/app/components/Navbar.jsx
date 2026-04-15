@@ -8,7 +8,7 @@ import { useAuth } from "@/context/AuthContext";
 
 const products = [
   { name: "Footballs", href: "/footballs" },
-  { name: "Cricket", href: "/cricket" },
+  { name: "Cricket", href: "/cricket-bats" },
   { name: "Chess", href: "/chess" },
   { name: "Carrom", href: "/carrom" },
   { name: "Volleyball", href: "/volleyball" },
