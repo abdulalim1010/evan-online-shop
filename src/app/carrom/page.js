@@ -1,24 +1,90 @@
-import CategoryShowcase from "../components/CategoryShowcase";
+"use client";
 
-export const metadata = {
-  title: "Carrom - Evan Sports",
-  description: "Premium carrom boards, coins, and accessories.",
-};
+import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export default function CarromPage() {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = async () => {
+    try {
+      const res = await fetch("/api/carrom");
+      const data = await res.json();
+      if (res.ok) {
+        setProducts(data);
+      }
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="page-shell fade-up">
+        <div className="flex justify-center items-center h-64">
+          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600"></div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <CategoryShowcase
-      title="Professional Carrom Collection"
-      subtitle="Tournament-grade boards, smooth striker control, and durable accessories for home and club use."
-      icon="🎯"
-      points={[
-        "Premium boards with polished playing surface",
-        "Match-ready strikers and coin sets",
-        "Protective covers and maintenance kits",
-        "Perfect choices for beginner to pro players",
-      ]}
-      ctaHref="/contact"
-      ctaText="Request Carrom Catalog"
-    />
+    <div className="page-shell fade-up">
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold md:text-4xl">Carrom Collection</h1>
+        <p className="mt-2 text-slate-600">Tournament-grade boards, strikers, and coin sets.</p>
+      </div>
+      
+      {products.length === 0 ? (
+        <div className="glass-card text-center py-12">
+          <p className="text-slate-500 text-lg">No carrom products available yet.</p>
+          <Link href="/" className="text-blue-600 hover:underline mt-4 inline-block">
+            Go back home
+          </Link>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {products.map((product) => (
+            <div
+              key={product._id}
+              className="glass-card overflow-hidden transition hover:-translate-y-1 hover:shadow-xl"
+            >
+              <div className="aspect-square bg-gray-100 relative">
+                {product.image ? (
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="object-cover w-full h-full"
+                  />
+                ) : (
+                  <div className="flex items-center justify-center h-full text-gray-400">
+                    No Image
+                  </div>
+                )}
+              </div>
+              <div className="p-4">
+                <h2 className="font-semibold text-lg">{product.name}</h2>
+                <p className="text-slate-600 text-sm mt-1">{product.description}</p>
+                <div className="mt-3 flex justify-between items-center">
+                  <span className="text-blue-600 font-bold text-xl">
+                    ৳{product.price}
+                  </span>
+                  <button className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 transition">
+                    Add to Cart
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
