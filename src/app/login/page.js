@@ -4,6 +4,8 @@ import { Suspense, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
+import Swal from "sweetalert2";
+import { useAuth } from "@/context/AuthContext";
 
 function LoginForm() {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -13,6 +15,7 @@ function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const registered = searchParams.get("registered");
+  const { login: authLogin } = useAuth();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -24,21 +27,23 @@ function LoginForm() {
     setLoading(true);
 
     try {
-      const res = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+      const data = await authLogin(formData.email, formData.password);
+
+      await Swal.fire({
+        icon: "success",
+        title: "Welcome back!",
+        text: `Hello ${data.user?.name || ""}, you have successfully signed in.`,
+        timer: 1500,
+        showConfirmButton: false,
       });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.error);
-      }
 
       router.push("/");
     } catch (err) {
-      setError(err.message);
+      if (err.message === "Invalid credentials") {
+        setError("Your email or password is incorrect");
+      } else {
+        setError(err.message);
+      }
     } finally {
       setLoading(false);
     }

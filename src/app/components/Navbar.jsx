@@ -141,6 +141,11 @@ export default function Navbar() {
                   </button>
 
                   <div className={`absolute right-0 top-full min-w-[150px] rounded-lg border border-slate-200 bg-white py-2 shadow-xl transition-all duration-200 ${userMenuOpen ? "visible translate-y-0 opacity-100" : "invisible -translate-y-2 opacity-0"}`}>
+                    {user.role === "admin" && (
+                      <Link href="/admin" className="block px-4 py-2 text-indigo-600 hover:bg-indigo-50 font-medium" onClick={() => setUserMenuOpen(false)}>
+                        Admin Dashboard
+                      </Link>
+                    )}
                     <Link href="/profile" className="block px-4 py-2 text-gray-700 hover:bg-blue-50" onClick={() => setUserMenuOpen(false)}>
                       Profile
                     </Link>

@@ -43,7 +43,7 @@ export default async function Home() {
       <section className="page-shell fade-up">
         <div className="flex justify-between items-center mb-8">
           <h2 className="section-title">Featured Footballs</h2>
-          <a href="/footballs" className="text-blue-600 hover:underline">View All -></a>
+          <a href="/footballs" className="text-blue-600 hover:underline">View All {'->'}</a>
         </div>
         
         {footballs.length === 0 ? (
@@ -87,7 +87,7 @@ export default async function Home() {
       <section className="page-shell fade-up-delay">
         <div className="flex justify-between items-center mb-8">
           <h2 className="section-title">Featured Cricket Bats</h2>
-          <a href="/cricket-bats" className="text-blue-600 hover:underline">View All -></a>
+          <a href="/cricket-bats" className="text-blue-600 hover:underline">View All {'->'}</a>
         </div>
         
         {cricketBats.length === 0 ? (
