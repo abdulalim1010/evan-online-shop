@@ -76,9 +76,9 @@ export default function VolleyballPage() {
                   <span className="text-blue-600 font-bold text-xl">
                     ৳{product.price}
                   </span>
-                  <button className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 transition">
-                    Add to Cart
-                  </button>
+                  <Link href={`/volleyball/${product._id}`} className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 transition">
+                    Details
+                  </Link>
                 </div>
               </div>
             </div>

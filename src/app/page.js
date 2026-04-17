@@ -1,5 +1,6 @@
 import Link from "next/link";
 import HeroBanner from "./components/HeroBanner";
+import SpecialOffer from "./components/SpecialOffer";
 import { getCollection } from "@/lib/mongodb";
 
 export const dynamic = 'force-dynamic';
@@ -26,19 +27,62 @@ async function getCricketBats() {
   }
 }
 
+async function getVolleyball() {
+  try {
+    const collection = await getCollection("volleyball");
+    const items = await collection.find({}).limit(4).toArray();
+    return items;
+  } catch (error) {
+    console.error("Error fetching volleyball:", error);
+    return [];
+  }
+}
+
+async function getHandball() {
+  try {
+    const collection = await getCollection("handball");
+    const items = await collection.find({}).limit(4).toArray();
+    return items;
+  } catch (error) {
+    console.error("Error fetching handball:", error);
+    return [];
+  }
+}
+
+async function getCarrom() {
+  try {
+    const collection = await getCollection("carrom");
+    const items = await collection.find({}).limit(4).toArray();
+    return items;
+  } catch (error) {
+    console.error("Error fetching carrom:", error);
+    return [];
+  }
+}
+
+async function getChess() {
+  try {
+    const collection = await getCollection("chess");
+    const items = await collection.find({}).limit(4).toArray();
+    return items;
+  } catch (error) {
+    console.error("Error fetching chess:", error);
+    return [];
+  }
+}
+
 export default async function Home() {
   const footballs = await getFootballs();
   const cricketBats = await getCricketBats();
-  const otherSports = [
-    { title: "Carrom", href: "/carrom", description: "Premium boards, coins, and striker sets." },
-    { title: "Volleyball", href: "/volleyball", description: "Indoor and outdoor match-ready volleyball gear." },
-    { title: "Chess", href: "/chess", description: "Elegant chess sets and tournament clocks." },
-    { title: "Handball", href: "/handball", description: "Balls, shoes, and training essentials." },
-  ];
+  const volleyball = await getVolleyball();
+  const handball = await getHandball();
+  const carrom = await getCarrom();
+  const chess = await getChess();
 
   return (
     <div>
       <HeroBanner />
+      <SpecialOffer />
 
       <section className="page-shell fade-up">
         <div className="flex justify-between items-center mb-8">
@@ -128,24 +172,180 @@ export default async function Home() {
         )}
       </section>
 
-      <section className="page-shell pt-0">
-        <div className="mb-8">
-          <h2 className="section-title">Explore Other Sports</h2>
-          <p className="soft-text mt-2">Find equipment by your favorite game category.</p>
+      <section className="page-shell fade-up-delay">
+        <div className="flex justify-between items-center mb-8">
+          <h2 className="section-title">Featured Volleyball</h2>
+          <a href="/volleyball" className="text-blue-600 hover:underline">View All {'->'}</a>
         </div>
-        <div className="grid gap-5 md:grid-cols-2">
-          {otherSports.map((sport) => (
-            <Link
-              href={sport.href}
-              key={sport.href}
-              className="glass-card block p-6 transition hover:-translate-y-1 hover:shadow-xl"
-            >
-              <h3 className="text-xl font-semibold text-slate-800">{sport.title}</h3>
-              <p className="soft-text mt-2">{sport.description}</p>
-              <span className="mt-4 inline-block text-sm font-semibold text-blue-600">Browse {sport.title}</span>
-            </Link>
-          ))}
+        
+        {volleyball.length === 0 ? (
+          <p className="text-center text-gray-500 py-8">No volleyball available yet.</p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {volleyball.map((item) => (
+              <div
+                key={item._id}
+                className="glass-card overflow-hidden transition hover:-translate-y-1 hover:shadow-xl"
+              >
+                <div className="aspect-square bg-gray-100">
+                  {item.image ? (
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="object-cover w-full h-full"
+                    />
+                  ) : (
+                    <div className="flex items-center justify-center h-full text-gray-400">
+                      🏐
+                    </div>
+                  )}
+                </div>
+                <div className="p-4">
+                  <h3 className="font-semibold">{item.name}</h3>
+                  <p className="soft-text text-sm">{item.description}</p>
+                  <div className="mt-2 flex justify-between items-center">
+                    <span className="text-blue-600 font-bold">৳{item.price}</span>
+                    <Link href={`/volleyball/${item._id}`} className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">
+                      Details
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+
+      <section className="page-shell fade-up-delay">
+        <div className="flex justify-between items-center mb-8">
+          <h2 className="section-title">Featured Handball</h2>
+          <a href="/handball" className="text-blue-600 hover:underline">View All {'->'}</a>
         </div>
+        
+        {handball.length === 0 ? (
+          <p className="text-center text-gray-500 py-8">No handball available yet.</p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {handball.map((item) => (
+              <div
+                key={item._id}
+                className="glass-card overflow-hidden transition hover:-translate-y-1 hover:shadow-xl"
+              >
+                <div className="aspect-square bg-gray-100">
+                  {item.image ? (
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="object-cover w-full h-full"
+                    />
+                  ) : (
+                    <div className="flex items-center justify-center h-full text-gray-400">
+                      🤾
+                    </div>
+                  )}
+                </div>
+                <div className="p-4">
+                  <h3 className="font-semibold">{item.name}</h3>
+                  <p className="soft-text text-sm">{item.description}</p>
+                  <div className="mt-2 flex justify-between items-center">
+                    <span className="text-blue-600 font-bold">৳{item.price}</span>
+                    <Link href={`/handball/${item._id}`} className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">
+                      Details
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+
+      <section className="page-shell fade-up-delay">
+        <div className="flex justify-between items-center mb-8">
+          <h2 className="section-title">Featured Carrom</h2>
+          <a href="/carrom" className="text-blue-600 hover:underline">View All {'->'}</a>
+        </div>
+        
+        {carrom.length === 0 ? (
+          <p className="text-center text-gray-500 py-8">No carrom available yet.</p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {carrom.map((item) => (
+              <div
+                key={item._id}
+                className="glass-card overflow-hidden transition hover:-translate-y-1 hover:shadow-xl"
+              >
+                <div className="aspect-square bg-gray-100">
+                  {item.image ? (
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="object-cover w-full h-full"
+                    />
+                  ) : (
+                    <div className="flex items-center justify-center h-full text-gray-400">
+                      🎱
+                    </div>
+                  )}
+                </div>
+                <div className="p-4">
+                  <h3 className="font-semibold">{item.name}</h3>
+                  <p className="soft-text text-sm">{item.description}</p>
+                  <div className="mt-2 flex justify-between items-center">
+                    <span className="text-blue-600 font-bold">৳{item.price}</span>
+                    <Link href={`/carrom/${item._id}`} className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">
+                      Details
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+
+      <section className="page-shell fade-up-delay">
+        <div className="flex justify-between items-center mb-8">
+          <h2 className="section-title">Featured Chess</h2>
+          <a href="/chess" className="text-blue-600 hover:underline">View All {'->'}</a>
+        </div>
+        
+        {chess.length === 0 ? (
+          <p className="text-center text-gray-500 py-8">No chess available yet.</p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {chess.map((item) => (
+              <div
+                key={item._id}
+                className="glass-card overflow-hidden transition hover:-translate-y-1 hover:shadow-xl"
+              >
+                <div className="aspect-square bg-gray-100">
+                  {item.image ? (
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="object-cover w-full h-full"
+                    />
+                  ) : (
+                    <div className="flex items-center justify-center h-full text-gray-400">
+                      ♟
+                    </div>
+                  )}
+                </div>
+                <div className="p-4">
+                  <h3 className="font-semibold">{item.name}</h3>
+                  <p className="soft-text text-sm">{item.description}</p>
+                  <div className="mt-2 flex justify-between items-center">
+                    <span className="text-blue-600 font-bold">৳{item.price}</span>
+                    <Link href={`/chess/${item._id}`} className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">
+                      Details
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </section>
     </div>
   );

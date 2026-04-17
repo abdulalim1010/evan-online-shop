@@ -6,7 +6,7 @@ export default function HeroBanner() {
       
       {/* Background Image */}
       <img
-        src="/evan1.png"
+        src="/banner1.jpg"
         alt="Sports Banner"
         className="absolute inset-0 w-full h-full object-cover"
       />
