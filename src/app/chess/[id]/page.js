@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getCollection } from "@/lib/mongodb";
 import AddToCartButton from "@/app/components/AddToCartButton";
+import ReviewSection from "@/app/components/ReviewSection";
 
 async function getChess(id) {
   try {
@@ -71,8 +72,16 @@ export default async function ChessDetailsPage({ params }) {
           
           <div className="text-3xl font-bold text-blue-600">৳{item.price}</div>
           
-          <AddToCartButton productName={item.name} />
+           <AddToCartButton productName={item.name} />
         </div>
+      </div>
+
+      <div className="mt-8">
+        <ReviewSection
+          productId={item._id.toString()}
+          collectionName="chess"
+          productName={item.name}
+        />
       </div>
     </div>
   );

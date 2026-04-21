@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getCollection } from "@/lib/mongodb";
 import AddToCartButton from "@/app/components/AddToCartButton";
+import ReviewSection from "@/app/components/ReviewSection";
 
 async function getCricketBat(id) {
   try {
@@ -71,8 +72,16 @@ export default async function CricketBatDetailsPage({ params }) {
           
           <div className="text-3xl font-bold text-blue-600">৳{cricketBat.price}</div>
           
-          <AddToCartButton productName={cricketBat.name} />
+           <AddToCartButton productName={cricketBat.name} />
         </div>
+      </div>
+
+      <div className="mt-8">
+        <ReviewSection
+          productId={cricketBat._id.toString()}
+          collectionName="cricket-bats"
+          productName={cricketBat.name}
+        />
       </div>
     </div>
   );

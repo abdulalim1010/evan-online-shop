@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getCollection } from "@/lib/mongodb";
 import AddToCartButton from "@/app/components/AddToCartButton";
+import ReviewSection from "@/app/components/ReviewSection";
 
 async function getFootball(id) {
   try {
@@ -71,8 +72,16 @@ export default async function FootballDetailsPage({ params }) {
           
           <div className="text-3xl font-bold text-blue-600">৳{football.price}</div>
           
-          <AddToCartButton productName={football.name} />
+           <AddToCartButton productName={football.name} />
         </div>
+      </div>
+
+      <div className="mt-8">
+        <ReviewSection
+          productId={football._id.toString()}
+          collectionName="footballs"
+          productName={football.name}
+        />
       </div>
     </div>
   );

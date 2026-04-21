@@ -1,35 +1,31 @@
 import { MongoClient } from "mongodb";
 
-const uri = process.env.MONGODB_URI;
-const dbName = process.env.MONGODB_DB;
-
-let client;
-let clientPromise;
-
-if (!uri) {
-  throw new Error("Please define the MONGODB_URI environment variable");
-}
-
-if (!dbName) {
-  throw new Error("Please define the MONGODB_DB environment variable");
-}
-
-if (process.env.NODE_ENV === "development") {
-  if (!global._mongoClientPromise) {
-    client = new MongoClient(uri);
-    global._mongoClientPromise = client.connect();
-  }
-  clientPromise = global._mongoClientPromise;
-} else {
-  client = new MongoClient(uri);
-  clientPromise = client.connect();
-}
-
-export default clientPromise;
+let client = null;
+let clientPromise = null;
 
 export async function getDatabase() {
-  const client = await clientPromise;
-  return client.db(dbName);
+  const uri = process.env.MONGODB_URI;
+  const dbName = process.env.MONGODB_DB;
+
+  if (!uri) {
+    throw new Error("Please define the MONGODB_URI environment variable");
+  }
+
+  if (!dbName) {
+    throw new Error("Please define the MONGODB_DB environment variable");
+  }
+
+  if (!clientPromise) {
+    client = new MongoClient(uri);
+    if (process.env.NODE_ENV === "development") {
+      clientPromise = global._mongoClientPromise = client.connect();
+    } else {
+      clientPromise = client.connect();
+    }
+  }
+
+  const connectedClient = await clientPromise;
+  return connectedClient.db(dbName);
 }
 
 export async function getCollection(collectionName) {
