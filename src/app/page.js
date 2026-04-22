@@ -1,6 +1,7 @@
 import Link from "next/link";
 import HeroBanner from "./components/HeroBanner";
 import SpecialOffer from "./components/SpecialOffer";
+import ProductSlider from "./components/ProductSlider";
 import { getCollection } from "@/lib/mongodb";
 
 export const dynamic = 'force-dynamic';
@@ -78,6 +79,57 @@ export default async function Home() {
   const handball = await getHandball();
   const carrom = await getCarrom();
   const chess = await getChess();
+
+  const allProducts = [
+    ...footballs.map(p => ({ 
+      _id: p._id?.toString() || p._id,
+      name: p.name,
+      description: p.description,
+      price: p.price,
+      image: p.image,
+      category: 'footballs'
+    })),
+    ...cricketBats.map(p => ({ 
+      _id: p._id?.toString() || p._id,
+      name: p.name,
+      description: p.description,
+      price: p.price,
+      image: p.image,
+      category: 'cricket-bats'
+    })),
+    ...volleyball.map(p => ({ 
+      _id: p._id?.toString() || p._id,
+      name: p.name,
+      description: p.description,
+      price: p.price,
+      image: p.image,
+      category: 'volleyball'
+    })),
+    ...handball.map(p => ({ 
+      _id: p._id?.toString() || p._id,
+      name: p.name,
+      description: p.description,
+      price: p.price,
+      image: p.image,
+      category: 'handball'
+    })),
+    ...carrom.map(p => ({ 
+      _id: p._id?.toString() || p._id,
+      name: p.name,
+      description: p.description,
+      price: p.price,
+      image: p.image,
+      category: 'carrom'
+    })),
+    ...chess.map(p => ({ 
+      _id: p._id?.toString() || p._id,
+      name: p.name,
+      description: p.description,
+      price: p.price,
+      image: p.image,
+      category: 'chess'
+    })),
+  ];
 
   return (
     <div>
@@ -347,6 +399,8 @@ export default async function Home() {
           </div>
         )}
       </section>
+
+      <ProductSlider products={allProducts} />
     </div>
   );
 }
