@@ -11,6 +11,11 @@ const CATEGORIES = [
   { id: "carrom", name: "Carrom", collection: "carrom" },
   { id: "volleyball", name: "Volleyball", collection: "volleyball" },
   { id: "handball", name: "Handball", collection: "handball" },
+  { id: "cloths/jersey", name: "Jersey", collection: "cloths/jersey" },
+  { id: "cloths/t-shirt", name: "T-Shirt", collection: "cloths/t-shirt" },
+  { id: "cloths/half-pant", name: "Half Pant", collection: "cloths/half-pant" },
+  { id: "cloths/trousers-pant", name: "Trousers Pant", collection: "cloths/trousers-pant" },
+  { id: "cloths/short", name: "Short", collection: "cloths/short" },
 ];
 
 async function verifyAdmin(request) {

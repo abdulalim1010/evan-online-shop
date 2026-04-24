@@ -20,6 +20,11 @@ const productCategories = [
   { href: "/admin/products/carrom", label: "Carrom", icon: "M4 4h16v16H4z" },
   { href: "/admin/products/volleyball", label: "Volleyball", icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" },
   { href: "/admin/products/handball", label: "Handball", icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" },
+  { href: "/admin/products/cloths/jersey", label: "Jersey", icon: "M16.72 7.95V7.4a3.6 3.6 0 00-4.32-3.49 3.5 3.5 0 00-4.32 3.49v.55m13.44 0a2 2 0 11-4 0 2 2 0 014 0zM10.8 20.86l-2.17.39a2 2 0 01-2.32-1.31L5 18h14l-.31 1.24a2 2 0 01-2.32 1.31l-2.17-.39a6 6 0 01-5.08-5.94 6 6 0 0110.16 0 6 6 0 01-5.08 5.94z" },
+  { href: "/admin/products/cloths/t-shirt", label: "T-Shirts", icon: "M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" },
+  { href: "/admin/products/cloths/half-pant", label: "Half Pants", icon: "M9 7h6a2 2 0 012 2v9a2 2 0 01-2 2H9a2 2 0 01-2-2V9a2 2 0 012-2zM9 7V5a2 2 0 012-2h2a2 2 0 012 2v2M3 9h2M19 9h2" },
+  { href: "/admin/products/cloths/trousers-pant", label: "Trousers", icon: "M9 7h6a2 2 0 012 2v9a2 2 0 01-2 2H9a2 2 0 01-2-2V9a2 2 0 012-2zM9 7V5a2 2 0 012-2h2a2 2 0 012 2v2M3 9h2M19 9h2M6 12h12" },
+  { href: "/admin/products/cloths/short", label: "Shorts", icon: "M6 8h12a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2v-6a2 2 0 012-2zM9 5h6a2 2 0 012 2v2a2 2 0 01-2 2H9a2 2 0 01-2-2V7a2 2 0 012-2z" },
 ];
 
 export default function AdminLayout({ children }) {
