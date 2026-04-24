@@ -16,12 +16,22 @@ const products = [
   { name: "Handball", href: "/handball" },
 ];
 
+const cloths = [
+  { name: "Jersey", href: "/cloths/jersey" },
+  { name: "T-shirt", href: "/cloths/t-shirt" },
+  { name: "Half pant", href: "/cloths/half-pant" },
+  { name: "Trousers pant", href: "/cloths/trousers-pant" },
+  { name: "Short", href: "/cloths/short" },
+];
+
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
+  const [clothsOpen, setClothsOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const productsRef = useRef(null);
+  const clothsRef = useRef(null);
   const userMenuRef = useRef(null);
   const router = useRouter();
   const { user, loading, logout } = useAuth();
@@ -30,6 +40,9 @@ export default function Navbar() {
     function handleClickOutside(event) {
       if (productsRef.current && !productsRef.current.contains(event.target)) {
         setProductsOpen(false);
+      }
+      if (clothsRef.current && !clothsRef.current.contains(event.target)) {
+        setClothsOpen(false);
       }
       if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
         setUserMenuOpen(false);
@@ -115,6 +128,31 @@ export default function Navbar() {
               </div>
             </div>
 
+            <div className="relative" ref={clothsRef}>
+              <button 
+                onClick={() => setClothsOpen(!clothsOpen)}
+                className="flex items-center gap-1 text-slate-700 transition-colors hover:text-blue-600"
+              >
+                Cloths 
+                <svg className={`w-3 h-3 transition-transform ${clothsOpen ? 'rotate-180' : ''}`} fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+              </button>
+
+              <div className={`absolute left-0 top-full min-w-[160px] rounded-lg border border-slate-200 bg-white py-2 shadow-xl transition-all duration-200 ${clothsOpen ? "visible translate-y-0 opacity-100" : "invisible -translate-y-2 opacity-0"}`}>
+                {cloths.map((item) => (
+                  <Link 
+                    key={item.name}
+                    href={item.href}
+                    className="block px-4 py-2 text-gray-700 transition-colors hover:bg-blue-50 hover:text-blue-700"
+                    onClick={() => setClothsOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
             <Link href="/about" className="text-slate-700 transition-colors hover:text-blue-600">About</Link>
             <Link href="/contact" className="text-slate-700 transition-colors hover:text-blue-600">Contact</Link>
           </div>
@@ -190,12 +228,24 @@ export default function Navbar() {
         </form>
         <div className="space-y-2">
           <Link href="/" className="block text-slate-700">Home</Link>
-          <div>
+           <div>
             <button onClick={() => setProductsOpen(!productsOpen)} className="block w-full text-left text-slate-700">
               Products ▼
             </button>
             <div className={`ml-4 mt-2 space-y-2 transition-all ${productsOpen ? "max-h-48" : "max-h-0 overflow-hidden"}`}>
               {products.map((item) => (
+                <Link key={item.name} href={item.href} onClick={() => setOpen(false)} className="block text-blue-600">
+                  {item.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+          <div>
+            <button onClick={() => setClothsOpen(!clothsOpen)} className="block w-full text-left text-slate-700">
+              Cloths ▼
+            </button>
+            <div className={`ml-4 mt-2 space-y-2 transition-all ${clothsOpen ? "max-h-48" : "max-h-0 overflow-hidden"}`}>
+              {cloths.map((item) => (
                 <Link key={item.name} href={item.href} onClick={() => setOpen(false)} className="block text-blue-600">
                   {item.name}
                 </Link>
